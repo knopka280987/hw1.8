@@ -1,25 +1,26 @@
 package task;
 
 import java.time.LocalDate;
+import java.util.Scanner;
+
+import static java.time.Year.isLeap;
 
 public class Main {
     public static void main(String[] args) {
-//        printIsLeap(2020);
-//      printInstallationMessage(1,2020);
-        printCalculateDeliveryDays(120);
-
+        var scanner = new Scanner(System.in);
+        System.out.println("введите код");
+        System.out.println();
+        var year = scanner.nextInt();
+        System.out.println(isLeap(year) ? "високосный" : "не високосный");
+//        System.out.println(generateInstallationMessage(1, 2020));
+//        System.out.println("Потребуется для доставки дней: " + calculateDeliveryDays(10));
     }
 
-    private static void printIsLeap(int year) {
-        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-            System.out.println("Високосный год");
-        }else {
-            System.out.println("Не високосный год");
-        }
-
+    private static boolean IsLeap(int year) {
+        return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
     }
 
-    private static void printInstallationMessage(int os, int productionYear) {
+    private static String generateInstallationMessage(int os, int productionYear) {
        if (!(os == 0 || os == 1)) {
            throw new RuntimeException("устройство поддерживаемо немедленно");
         }
@@ -29,19 +30,16 @@ public class Main {
        String versionMessage = productionYear < currentYear ? "облегченную" : "";
        String osMessage = os == 0 ? "iOS" : "android";
 
-        System.out.printf("Установите %s версию приложения для %s по ссылке %s", versionMessage, osMessage);
+       return String.format("Установите %s версию приложения для %s по ссылке %s", versionMessage, osMessage);
     }
-    private static void printCalculateDeliveryDays(int distance) {
+
+    private static int calculateDeliveryDays(int distance) {
        int start = 20;
        int step = 40;
-       int result; //количество дней
+       int result = 1;
        if (distance >= start) {
-           result = 1;
-       } else {
            result = (Math.abs((distance - start) / step) + 2);
        }
-        System.out.println("Потребуется для доставки дней: " + result);
-
+       return result;
         }
-
     }
